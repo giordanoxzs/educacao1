@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar Turma</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+        }
+        .container h2 {
+            margin-bottom: 20px;
+        }
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .submit-btn, .back-btn, .list-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #007BFF; /* Azul */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px; /* Espaço acima do botão */
+            font-size: 16px; /* Tamanho da fonte */
+        }
+        .submit-btn:hover, .back-btn:hover, .list-btn:hover {
+            background-color: #0056b3; /* Azul escuro ao passar o mouse */
+        }
+        .link {
+            margin-top: 20px;
+        }
+        .link a {
+            color: #007BFF; /* Azul */
+            text-decoration: none;
+            font-size: 16px; /* Tamanho da fonte */
+        }
+        .link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Cadastrar Turma</h2>
+        <form id="turmaForm" onsubmit="cadastrarTurma(event)">
+            <div class="input-group">
+                <label for="nome">Nome da Turma</label>
+                <input type="text" id="nome" name="nome" required>
+            </div>
+            <div class="input-group">
+                <label for="materia">Matéria</label>
+                <input type="text" id="materia" name="materia" required>
+            </div>
+            <div class="input-group">
+                <label for="periodo">Período</label>
+                <input type="text" id="periodo" name="periodo" required>
+            </div>
+            <button type="submit" class="submit-btn">Cadastrar</button>
+        </form>
+        <button class="list-btn" onclick="listarTurmas()">Listar Turmas</button>
+        <button class="back-btn" onclick="voltar()">Voltar para a Tela Principal</button>
+    </div>
+
+    <script>
+        function cadastrarTurma(event) {
+            event.preventDefault();
+            const nome = document.getElementById('nome').value;
+            const materia = document.getElementById('materia').value;
+            const periodo = document.getElementById('periodo').value;
+
+            // Verificar se a turma já existe
+            const turmas = JSON.parse(localStorage.getItem('turmas')) || [];
+            const turmaExistente = turmas.find(turma => turma.nome === nome);
+
+            if (turmaExistente) {
+                alert('Esta turma já foi cadastrada!');
+                return; // Não permite cadastrar uma turma com o mesmo nome
+            }
+
+            turmas.push({ nome, materia, periodo });
+            localStorage.setItem('turmas', JSON.stringify(turmas));
+
+            alert('Turma cadastrada com sucesso!');
+            document.getElementById('turmaForm').reset();
+        }
+
+        function listarTurmas() {
+            window.location.href = "listar-turma.html"; // Ajuste o caminho conforme necessário
+        }
+
+        function voltar() {
+            window.location.href = "tela-principal.html"; // Ajuste o caminho conforme necessário
+        }
+    </script>
+</body>
+</html>

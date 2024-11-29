@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tela Principal do Professor</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            height: 100vh;
+        }
+        .header {
+            background-color: #007BFF; /* Azul */
+            color: white;
+            padding: 15px;
+            text-align: center;
+            width: 100%;
+            position: relative;
+        }
+        .logout-btn {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .logout-btn:hover {
+            background-color: darkred;
+        }
+        .welcome {
+            margin-top: 20px;
+            font-size: 20px;
+            color: #333;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            margin: 15px;
+            padding: 30px;
+            text-align: center;
+            width: 300px;
+            height: 350px;
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: scale(1.05);
+        }
+        .card img {
+            width: 120px; /* Ajuste para um tamanho uniforme */
+            height: 120px; /* Ajuste para um tamanho uniforme */
+            margin-bottom: 10px;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: #007BFF; /* Azul */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: background-color 0.2s;
+            margin-top: 10px;
+        }
+        .button:hover {
+            background-color: #0056b3; /* Azul escuro ao passar o mouse */
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Painel do Professor</h1>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+
+    <div class="welcome" id="welcomeMessage"></div> <!-- Mensagem de boas-vindas -->
+
+    <div class="container">
+        <div class="card">
+            <img src="https://img.icons8.com/ios-filled/120/000000/classroom.png" alt="Gerenciar Turmas">
+            <h3>Gerenciar Turmas</h3>
+            <p>Adicione ou edite turmas.</p>
+            <a href="gerenciar-turmas.html" class="button">Gerenciar</a>
+        </div>
+        <div class="card">
+            <img src="https://img.icons8.com/ios-filled/120/000000/edit.png" alt="Listar Turmas">
+            <h3>Listar Turmas</h3>
+            <p>Modifique informações da turma.</p>
+            <a href="listar-turma.html" class="button">Listar</a>
+        </div>
+        <div class="card">
+            <img src="https://img.icons8.com/ios-filled/120/000000/tasks.png" alt="Atividades da Turma">
+            <h3>Atividades da Turma</h3>
+            <p>Gerencie as atividades da turma.</p>
+            <a href="atividades-turma.html" class="button">Atividades</a>
+        </div>
+    </div>
+
+    <script>
+        function logout() {
+            localStorage.removeItem('usuarioLogado'); // Limpa o usuário ao fazer logout
+            window.location.href = "login.html"; // Redireciona para a tela de login
+        }
+
+        // Função para exibir o nome do professor autenticado
+        function exibirNomeUsuario() {
+            const usuario = JSON.parse(localStorage.getItem('usuarioLogado')); // Recupera o nome do usuário do localStorage
+            const welcomeMessage = document.getElementById('welcomeMessage');
+            if (usuario) {
+                welcomeMessage.textContent = `Bem-vindo, ${usuario.nome}!`; // Altera para o nome do professor
+            } else {
+                welcomeMessage.textContent = 'Bem-vindo, Professor!';
+            }
+        }
+
+        // Chama a função ao carregar a página
+        window.onload = exibirNomeUsuario;
+    </script>
+</body>
+</html>

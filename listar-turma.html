@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listar Turmas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+        }
+        .container h2 {
+            margin-bottom: 20px;
+        }
+        .turma-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .turma-item button {
+            background-color: #007BFF; /* Azul */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .turma-item button:hover {
+            background-color: #0056b3; /* Azul escuro ao passar o mouse */
+        }
+        .back-btn {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #007BFF; /* Azul */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+        .back-btn:hover {
+            background-color: #0056b3; /* Azul escuro ao passar o mouse */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Listar Turmas</h2>
+        <div id="turmasList"></div>
+        <button class="back-btn" onclick="voltar()">Voltar para a Tela Principal</button>
+    </div>
+
+    <script>
+        function listarTurmas() {
+            const turmas = JSON.parse(localStorage.getItem('turmas')) || [];
+            const turmasList = document.getElementById('turmasList');
+            turmasList.innerHTML = '';
+
+            if (turmas.length === 0) {
+                turmasList.innerHTML = '<p>Nenhuma turma cadastrada.</p>';
+            } else {
+                turmas.forEach((turma, index) => {
+                    const turmaItem = document.createElement('div');
+                    turmaItem.className = 'turma-item';
+                    turmaItem.innerHTML = `
+                        <span>${turma.nome} - ${turma.materia} - ${turma.periodo}</span>
+                        <button onclick="confirmarExclusao(${index})">Excluir</button>
+                    `;
+                    turmasList.appendChild(turmaItem);
+                });
+            }
+        }
+
+        function confirmarExclusao(index) {
+            const turmas = JSON.parse(localStorage.getItem('turmas')) || [];
+            const atividades = JSON.parse(localStorage.getItem('atividades')) || [];
+
+            // Verifica se há alguma atividade cadastrada para a turma
+            const turma = turmas[index];
+            const temAtividades = atividades.some(atividade => atividade.turmaNome === turma.nome);
+
+            if (temAtividades) {
+                alert("Não é possível excluir esta turma pois existem atividades cadastradas para ela.");
+                return;
+            }
+
+            const confirmacao = confirm("Você realmente deseja excluir esta turma?");
+            if (confirmacao) {
+                excluirTurma(index);
+            }
+        }
+
+        function excluirTurma(index) {
+            const turmas = JSON.parse(localStorage.getItem('turmas')) || [];
+            turmas.splice(index, 1);
+            localStorage.setItem('turmas', JSON.stringify(turmas));
+            listarTurmas();
+        }
+
+        function voltar() {
+            window.location.href = "tela-principal.html"; // Ajuste o caminho conforme necessário
+        }
+
+        // Chama a função para listar turmas ao carregar a página
+        listarTurmas();
+    </script>
+</body>
+</html>

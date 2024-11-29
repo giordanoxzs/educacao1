@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tela de Cadastro</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://img.freepik.com/fotos-premium/fundo-desfocado-da-sala-de-escritorio-perfeito-para-site-papel-de-parede-ou-design-de-impressao-com-espaco-vazio-para-c_800563-327.jpg');
+            background-size: cover; /* Faz com que a imagem cubra toda a tela */
+            background-position: center; /* Centraliza a imagem */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: white; /* Altera a cor do texto para branco */
+        }
+        .register-container {
+            background-color: rgba(255, 255, 255, 0.9); /* Fundo branco com maior opacidade */
+            padding: 30px; /* Aumenta o padding para dar mais espaço interno */
+            border-radius: 8px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2); /* Sombra mais pronunciada */
+            width: 400px; /* Aumenta a largura do card */
+            text-align: center;
+        }
+        .register-container h2 {
+            margin-bottom: 20px;
+            color: #333; /* Cor do título */
+        }
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333; /* Cor das labels */
+        }
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .register-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #007BFF; /* Azul mais intenso para o botão */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold; /* Texto do botão em negrito */
+        }
+        .register-btn:hover {
+            background-color: #0056b3; /* Azul mais escuro ao passar o mouse */
+        }
+        .login-link {
+            margin-top: 20px;
+            color: black; /* Altera a cor do texto para preto */
+        }
+        .login-link a {
+            color: #007BFF; /* Cor azul para o link de registro */
+            text-decoration: none;
+        }
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <script>
+        function cadastrar(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const email = document.getElementById('email').value;
+
+            // Salvar informações no localStorage
+            localStorage.setItem('username', username);
+            localStorage.setItem('password', password);
+            localStorage.setItem('email', email); // Salvar e-mail
+
+            // Redirecionar para a página de login
+            window.location.href = "login.html"; // Caminho para a tela de login
+        }
+    </script>
+</head>
+<body>
+    <div class="register-container">
+        <h2>Cadastro</h2>
+        <form onsubmit="cadastrar(event)">
+            <div class="input-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="input-group">
+                <label for="username">Usuário</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Senha</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit" class="register-btn">Cadastrar</button>
+        </form>
+        <div class="login-link">
+            <p>Já tem uma conta? <a href="login.html">Faça login</a></p>
+        </div>
+    </div>
+</body>
+</html>

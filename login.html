@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tela de Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://img.freepik.com/fotos-premium/fundo-desfocado-da-sala-de-escritorio-perfeito-para-site-papel-de-parede-ou-design-de-impressao-com-espaco-vazio-para-c_800563-327.jpg');
+            background-size: cover; /* Faz com que a imagem cubra toda a tela */
+            background-position: center; /* Centraliza a imagem */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: white; /* Altera a cor do texto para branco */
+        }
+        .login-container {
+            background-color: rgba(255, 255, 255, 0.9); /* Fundo branco com maior opacidade */
+            padding: 30px; /* Aumenta o padding para dar mais espaço interno */
+            border-radius: 8px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2); /* Sombra mais pronunciada */
+            width: 400px; /* Aumenta a largura do card */
+            text-align: center;
+        }
+        .login-container h2 {
+            margin-bottom: 20px;
+            color: #333; /* Cor do título */
+        }
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333; /* Cor das labels */
+        }
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .login-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #007BFF; /* Azul mais intenso para o botão */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold; /* Texto do botão em negrito */
+        }
+        .login-btn:hover {
+            background-color: #0056b3; /* Azul mais escuro ao passar o mouse */
+        }
+        .register-link {
+            margin-top: 20px;
+            color: black; /* Altera a cor do texto para preto */
+        }
+        .register-link a {
+            color: #007BFF; /* Cor azul para o link de registro */
+            text-decoration: none;
+        }
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <script>
+        function login(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Verificar se os dados de login estão corretos
+            const storedUsername = localStorage.getItem('username');
+            const storedPassword = localStorage.getItem('password');
+
+            if (username === storedUsername && password === storedPassword) {
+                // Se os dados estiverem corretos, armazena o nome do usuário no localStorage
+                localStorage.setItem('usuarioLogado', JSON.stringify({ nome: username }));
+                
+                // Redireciona para a tela principal
+                window.location.href = "tela-principal.html"; // Caminho para a Tela Principal
+            } else {
+                alert("Usuário ou senha incorretos.");
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Login</h2>
+        <form onsubmit="login(event)">
+            <div class="input-group">
+                <label for="username">Usuário</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Senha</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit" class="login-btn">Entrar</button>
+        </form>
+        <div class="register-link">
+            <p>Não tem uma conta? <a href="cadastro.html">Cadastre-se</a></p>
+        </div>
+    </div>
+</body>
+</html>

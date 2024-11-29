@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listar Atividades</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 20px;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+        }
+        .container h2 {
+            margin-bottom: 20px;
+        }
+        .activity {
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            padding: 10px;
+            text-align: left;
+            display: flex; /* Adicionado para alinhar o botão à direita */
+            justify-content: space-between; /* Distribui espaço entre elementos */
+            align-items: center; /* Alinha verticalmente */
+        }
+        .delete-btn {
+            padding: 8px 12px; /* Aumentando o tamanho do botão */
+            background-color: #007BFF; /* Cor azul */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: auto; /* Move o botão para a direita */
+        }
+        .delete-btn:hover {
+            background-color: #0056b3; /* Azul mais escuro ao passar o mouse */
+        }
+        .back-btn {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #007BFF; /* Azul */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+        .back-btn:hover {
+            background-color: #0056b3; /* Azul mais escuro ao passar o mouse */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Listar Atividades</h2>
+        <div id="activitiesList"></div>
+        <button class="back-btn" onclick="voltar()">Voltar para a Tela Principal</button>
+    </div>
+
+    <script>
+        function listarAtividades() {
+            const atividades = JSON.parse(localStorage.getItem('atividades')) || [];
+            const activitiesList = document.getElementById('activitiesList');
+            activitiesList.innerHTML = ''; // Limpa a lista antes de preencher
+
+            if (atividades.length === 0) {
+                activitiesList.innerHTML = '<p>Nenhuma atividade cadastrada.</p>';
+                return;
+            }
+
+            atividades.forEach((atividade, index) => {
+                const activityDiv = document.createElement('div');
+                activityDiv.className = 'activity';
+                activityDiv.innerHTML = `
+                    <div>
+                        <strong>Atividade ${index + 1}:</strong>
+                        <p><strong>Nome:</strong> ${atividade.nome}</p>
+                        <p><strong>Descrição:</strong> ${atividade.descricao}</p>
+                        <p><strong>Data:</strong> ${atividade.data}</p>
+                        <p><strong>Turma:</strong> ${atividade.turma}</p>
+                    </div>
+                    <button class="delete-btn" onclick="excluirAtividade(${index})">Excluir</button>
+                `;
+                activitiesList.appendChild(activityDiv);
+            });
+        }
+
+        function excluirAtividade(index) {
+            const atividades = JSON.parse(localStorage.getItem('atividades')) || [];
+            atividades.splice(index, 1); // Remove a atividade do array
+            localStorage.setItem('atividades', JSON.stringify(atividades)); // Atualiza o localStorage
+            listarAtividades(); // Atualiza a lista na tela
+        }
+
+        function voltar() {
+            window.location.href = "tela-principal.html"; // Ajuste o caminho conforme necessário
+        }
+
+        // Chama a função ao carregar a página
+        window.onload = listarAtividades;
+    </script>
+</body>
+</html>
